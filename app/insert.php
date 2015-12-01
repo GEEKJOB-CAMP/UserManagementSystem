@@ -37,9 +37,9 @@
 
     種別:
     <br>
-    <input type="radio" name="type" value="エンジニア"　checked>エンジニア<br>
-    <input type="radio" name="type" value="営業">営業<br>
-    <input type="radio" name="type" value="その他">その他<br>
+    <input type="radio" name="type" value="1" checked>エンジニア<br>
+    <input type="radio" name="type" value="2">営業<br>
+    <input type="radio" name="type" value="3">その他<br>
     <br>
     
     電話番号:

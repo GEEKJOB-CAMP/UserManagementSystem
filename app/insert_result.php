@@ -46,7 +46,7 @@
     <h1>登録結果画面</h1><br>
     名前:<?php echo $name;?><br>
     生年月日:<?php echo $birthday;?><br>
-    種別:<?php echo $type?><br>
+    種別:<?php echo ex_typenum($type);?><br>
     電話番号:<?php echo $tell;?><br>
     自己紹介:<?php echo $comment;?><br>
     以上の内容で登録しました。<br>

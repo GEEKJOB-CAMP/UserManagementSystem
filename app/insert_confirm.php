@@ -1,4 +1,5 @@
 <?php require_once '../common/defineUtil.php'; ?>
+<?php require_once '../common/scriptUtil.php'; ?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -30,7 +31,7 @@
         <h1>登録確認画面</h1><br>
         名前:<?php echo $post_name;?><br>
         生年月日:<?php echo $post_birthday;?><br>
-        種別:<?php echo $post_type?><br>
+        種別:<?php echo ex_typenum($post_type);?><br>
         電話番号:<?php echo $post_tell;?><br>
         自己紹介:<?php echo $post_comment;?><br>
 
