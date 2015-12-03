@@ -48,3 +48,117 @@ function insert_profiles($name, $birthday, $type, $tell, $comment){
     $insert_db=null;
     return null;
 }
+
+function serch_all_profiles(){
+    //db接続を確立
+    $search_db = connect2MySQL();
+    
+    $search_sql = "SELECT * FROM user_t";
+    
+    //クエリとして用意
+    $seatch_query = $search_db->prepare($search_sql);
+    
+    //SQLを実行
+    try{
+        $seatch_query->execute();
+    } catch (PDOException $e) {
+        $seatch_query=null;
+        return $e->getMessage();
+    }
+    
+    //全レコードを連想配列として返却
+    return $seatch_query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * 複合条件検索を行う
+ * @param type $name
+ * @param type $year
+ * @param type $type
+ * @return type
+ */
+function serch_profiles($name=null,$year=null,$type=null){
+    //db接続を確立
+    $search_db = connect2MySQL();
+    
+    $search_sql = "SELECT * FROM user_t";
+    $flag = false;
+    if(isset($name)){
+        $search_sql .= " WHERE name like :name";
+        $flag = true;
+    }
+    if(isset($year) && $flag = false){
+        $search_sql .= " WHERE birthday like :year";
+        $flag = true;
+    }else if(isset($year)){
+        $search_sql .= " AND birthday like :year";
+    }
+    if(isset($type) && $flag = false){
+        $search_sql .= " WHERE type = :type";
+    }else if(isset($type)){
+        $search_sql .= " AND type = :type";
+    }
+    
+    //クエリとして用意
+    $seatch_query = $search_db->prepare($search_sql);
+    
+    $seatch_query->bindValue(':name','%'.$name.'%');
+    $seatch_query->bindValue(':year','%'.$year.'%');
+    $seatch_query->bindValue(':type',$type);
+    //SQLを実行
+    try{
+        $seatch_query->execute();
+    } catch (PDOException $e) {
+        $seatch_query=null;
+        return $e->getMessage();
+    }
+    
+    //該当するレコードを連想配列として返却
+    return $seatch_query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+function profile_detail($id){
+    //db接続を確立
+    $detail_db = connect2MySQL();
+    
+    $detail_sql = "SELECT * FROM user_t WHERE userID=:id";
+    
+    //クエリとして用意
+    $detail_query = $detail_db->prepare($detail_sql);
+    
+    $detail_query->bindValue(':id',$id);
+    
+    //SQLを実行
+    try{
+        $detail_query->execute();
+    } catch (PDOException $e) {
+        $detail_query=null;
+        return $e->getMessage();
+    }
+    
+    //レコードを連想配列として返却
+    return $detail_query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function delete_profile($id){
+    //db接続を確立
+    $delete_db = connect2MySQL();
+    
+    $delete_sql = "DELEtE * FROM user_t WHERE userID=:id";
+    
+    //クエリとして用意
+    $delete_query = $delete_db->prepare($delete_sql);
+    
+    $delete_query->bindValue(':id',$id);
+    
+    //SQLを実行
+    try{
+        $delete_query->execute();
+    } catch (PDOException $e) {
+        $delete_query=null;
+        return $e->getMessage();
+    }
+    return null;
+}
